@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+      "baseUrl": ".",
+      "jsx": "react-jsx",
+      "allowJs": true,
+      "paths": {
+        "@components/*": [
+          "./src/components/*"
+        ],
+        "@assets/*": [
+          "./src/assets/*"
+        ],
+        "@layouts/*": [
+          "./src/layouts/*"
+        ],
+        "@utils/*": [
+          "./src/utils/*"
+        ],
+        "@fonts/*": [
+          "./src/fonts/*"
+        ],
+      }
+    }
+}
