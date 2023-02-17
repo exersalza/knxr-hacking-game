@@ -15,5 +15,16 @@
 
 .active {
     border-color: black;
+    animation: success .5s;
+}
 
+@keyframes success {
+    from {
+        border-color: #00e1ff;
+        box-shadow: 0 0 12px 8px #00e1ff;
+    }
+    to {
+        border-color: black;
+        box-shadow: none;
+    }
 }

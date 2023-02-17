@@ -14,8 +14,8 @@ export default function Game({isActive}) {
 
     useEffect(() => {
         let temp = [];
-        for (let i = 0; i < 5; i++) {
-            temp.push(selector[Math.floor(Math.random() * 4)]);
+        for (let i = 0; i < MAX_STEPS + 1; i++) {
+            temp.push(selector[Math.floor(Math.random() * MAX_STEPS)]);
         }
 
         setTiles(temp);
@@ -24,15 +24,15 @@ export default function Game({isActive}) {
     useEffect(() => {
         function handleKeyPress(event) {
             console.log(currentStep);
-            if (currentStep >= 4) {
+            if (currentStep >= MAX_STEPS) {
                 setGameActive(false);
                 return;
             };
 
             if (event.key === tiles[currentStep]) {
                 let element = document.getElementById(currentStep);
-                if (currentStep < 4) {
-                    let nextElement = document.getElementById(currentStep + 11);
+                if (currentStep < MAX_STEPS) {
+                    let nextElement = document.getElementById(currentStep + 51);
                     nextElement.classList.remove("invisible");
                 }
 
@@ -64,7 +64,7 @@ export default function Game({isActive}) {
                                 <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
                                                         rounded grid place-content-center m-1 blur-none z-100">
         
-                                    <p className="uppercase" id={i + 10}>{v}</p>
+                                    <p className="uppercase" id={i + 50}>{v}</p>
                                 </div>
                             )
                         }
@@ -73,7 +73,7 @@ export default function Game({isActive}) {
                             <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
                                                     rounded grid place-content-center m-1 blur-none z-100">
 
-                                <p className="uppercase invisible" id={i + 10}>{v}</p>
+                                <p className="uppercase invisible" id={i + 50}>{v}</p>
                             </div>
                         )
                     })}
