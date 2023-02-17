@@ -22,25 +22,52 @@ export default function Game() {
 
     useEffect(() => {
         function handleKeyPress(event) {
-          if (event.key === tiles[currentStep]) {
-            console.log("correct", currentStep);
-            setCurrentStep(currentStep + 1);
-          }
+            console.log(currentStep);
+            if (currentStep > 4) return;
+
+            if (event.key === tiles[currentStep]) {
+                let element = document.getElementById(currentStep);
+                if (currentStep < 4) {
+                    let nextElement = document.getElementById(currentStep + 10);
+                    nextElement.classList.remove("invisible");
+                }
+
+                element.classList.add("active");
+
+                setCurrentStep(currentStep + 1);
+            }
         }
-      
+
         document.addEventListener("keypress", handleKeyPress);
-      
+
         return () => {
-          document.removeEventListener("keypress", handleKeyPress);
+            document.removeEventListener("keypress", handleKeyPress);
         };
-      }, [tiles, currentStep]);
-    
+    }, [tiles, currentStep]);
+
+
     return (
-        <div className="h-[auto] w-[auto] p-4 shadow- rounded bg-transparent  flex items-center justify-center z-0 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            {tiles.map((v) => {
+        <div className="h-[auto] w-[auto] p-4
+                        rounded bg-transparent flex items-center 
+                        justify-center z-0 absolute top-[50%] left-[50%] 
+                        translate-x-[-50%] translate-y-[-50%]">
+
+            {tiles.map((v, i) => {
+                if (!i) {
+                    return (
+                        <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
+                                                rounded grid place-content-center m-1 blur-none z-100">
+
+                            <p className="uppercase">{v}</p>
+                        </div>
+                    )
+                }
+
                 return (
-                    <div className="h-[48px] w-[48px] border-[1px] border-black rounded-sm grid place-content-center m-1 blur-none z-100">
-                        <p className="uppercase">{v}</p>
+                    <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
+                                            rounded grid place-content-center m-1 blur-none z-100">
+                                                {/* VISIBILLITY  WIP*/}
+                        <p className="uppercase invisible" id={i + 10}>{v}</p>
                     </div>
                 )
             })}
