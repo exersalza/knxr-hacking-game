@@ -1,12 +1,13 @@
 import { useEffect, useState } from "preact/hooks"
+import GrayBox from "./graybox";
 
 const MAX_STEPS = 4;
 const selector = ['w', 'a', 's', 'd'];
 
-export default function Game() {
-    const [gameActive, setGameActive] = useState(true);
+export default function Game({isActive}) {
+    const [gameActive, setGameActive] = useState(isActive);
 
-    if (!gameActive) return;
+    if (!isActive) return;
 
     const [tiles, setTiles] = useState([]);
     const [currentStep, setCurrentStep] = useState(0);
@@ -23,12 +24,15 @@ export default function Game() {
     useEffect(() => {
         function handleKeyPress(event) {
             console.log(currentStep);
-            if (currentStep > 4) return;
+            if (currentStep >= 4) {
+                setGameActive(false);
+                return;
+            };
 
             if (event.key === tiles[currentStep]) {
                 let element = document.getElementById(currentStep);
                 if (currentStep < 4) {
-                    let nextElement = document.getElementById(currentStep + 10);
+                    let nextElement = document.getElementById(currentStep + 11);
                     nextElement.classList.remove("invisible");
                 }
 
@@ -45,32 +49,37 @@ export default function Game() {
         };
     }, [tiles, currentStep]);
 
+    if (gameActive) {
+        return (
+            <>
+                <GrayBox />
+                <div className="h-[auto] w-[auto] p-4
+                                rounded bg-transparent flex items-center 
+                                justify-center z-0 absolute top-[50%] left-[50%] 
+                                translate-x-[-50%] translate-y-[-50%]">
+        
+                    {tiles.map((v, i) => {
+                        if (!i) {
+                            return (
+                                <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
+                                                        rounded grid place-content-center m-1 blur-none z-100">
+        
+                                    <p className="uppercase" id={i + 10}>{v}</p>
+                                </div>
+                            )
+                        }
+        
+                        return (
+                            <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
+                                                    rounded grid place-content-center m-1 blur-none z-100">
 
-    return (
-        <div className="h-[auto] w-[auto] p-4
-                        rounded bg-transparent flex items-center 
-                        justify-center z-0 absolute top-[50%] left-[50%] 
-                        translate-x-[-50%] translate-y-[-50%]">
-
-            {tiles.map((v, i) => {
-                if (!i) {
-                    return (
-                        <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
-                                                rounded grid place-content-center m-1 blur-none z-100">
-
-                            <p className="uppercase">{v}</p>
-                        </div>
-                    )
-                }
-
-                return (
-                    <div id={i} className="h-[48px] w-[48px] border-2 border-gray-400
-                                            rounded grid place-content-center m-1 blur-none z-100">
-                                                {/* VISIBILLITY  WIP*/}
-                        <p className="uppercase invisible" id={i + 10}>{v}</p>
-                    </div>
-                )
-            })}
-        </div>
-    )
+                                <p className="uppercase invisible" id={i + 10}>{v}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+            </>
+        )
+    }
+   
 }
